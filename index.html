@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Generator - Cook Something Amazing</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-headline">Turn Your Ingredients into Magic Recipes</h1>
+            <p class="hero-subheadline">AI-powered recipe generator tailored to your taste & pantry.</p>
+            <div>
+                <button class="cta-button" onclick="generateRecipe('hero')">Generate a Recipe</button>
+                <button class="cta-button" onclick="generateRecipe('demo')">Try a Demo</button>
+            </div>
+            <div class="input-container">
+                <input type="text" id="hero-ingredients" class="ingredient-input" placeholder="Type your ingredients... (e.g., chicken, pasta, tomatoes)">
+            </div>
+            <div id="hero-recipe-output" class="recipe-output mt-8 bg-gray-800 p-6 rounded-lg shadow-lg hidden"></div>
+            <img src="Logo1.jpg" alt="Hero Dish" class="hero-image w-full h-64 object-cover rounded-lg mt-8">
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works-section py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-12">How It Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="step-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="step-icon mb-4">
+                        <svg class="w-12 h-12 mx-auto text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Step 1: Enter Ingredients</h3>
+                    <p class="text-gray-400">Type in what you have in your pantry, like pasta, tomatoes, or cheese.</p>
+                </div>
+                <div class="step-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="step-icon mb-4">
+                        <svg class="w-12 h-12 mx-auto text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Step 2: Let AI Suggest</h3>
+                    <p class="text-gray-400">Our AI mixes and matches to create a unique recipe for you.</p>
+                </div>
+                <div class="step-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="step-icon mb-4">
+                        <svg class="w-12 h-12 mx-auto text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Step 3: Enjoy Your Recipe</h3>
+                    <p class="text-gray-400">Cook a delicious meal tailored to your preferences.</p>
+                </div>
+                <div class="step-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="step-icon mb-4">
+                        <svg class="w-12 h-12 mx-auto text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Step 4: Save or Share</h3>
+                    <p class="text-gray-400">Save your recipe or share it with friends instantly.</p>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <button class="learn-more-button bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition duration-300" onclick="learnMore()">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section class="key-features-section py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-12">Key Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="feature-icon mb-4">
+                        <svg class="w-12 h-12 mx-auto text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.5 3.5 0 105.33 4.606 3.5 3.5 0 00-5.33-4.606L7.835 4.697zM12 20a8 8 0 100-16 8 8 0 000 16z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Personalized Results</h3>
+                    <p class="text-gray-400">Recipes tailored to your preferences, allergies, and dietary needs like Vegan or Keto.</p>
+                </div>
+                <div class="feature-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="feature-icon mb-4">
+                        <svg class="w-12 h-12 mx-auto text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">AI-Powered Creativity</h3>
+                    <p class="text-gray-400">Unique, innovative recipes generated with no repeats, every time.</p>
+                </div>
+                <div class="feature-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="feature-icon mb-4">
+                        <svg class="w-12 h-12 mx-auto text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.5 0v2M12 3v2m3-2v2M3 9h12m-7 6h7m-7 2h7m-10-6v6m-2-2h.01M3 13h.01"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Smart Pantry Check</h3>
+                    <p class="text-gray-400">Make the most of what you already have without wasting ingredients.</p>
+                </div>
+                <div class="feature-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="feature-icon mb-4">
+                        <svg class="w-12 h-12 mx-auto text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Voice Assistant Ready</h3>
+                    <p class="text-gray-400">Ask “Hey Flavory, what can I make today?” for hands-free recipe ideas.</p>
+                </div>
+                <div class="feature-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="feature-icon mb-4">
+                        <svg class="w-12 h-12 mx-auto text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.5 0v2M12 3v2m3-2v2M3 9h12m-7 6h7m-7 2h7m-10-6v6m-2-2h.01M3 13h.01"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Multilingual Support</h3>
+                    <p class="text-gray-400">Get recipes in your native language for a seamless experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sample Recipes Section -->
+    <section id="sample-recipes" class="sample-recipes-section py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-12">Sample Recipes</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="recipe-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-xl font-semibold mb-4 text-white">Chicken Stir-Fry</h3>
+                    <img src="Recipe1.jpg" alt="Chicken Stir-Fry" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <p class="text-gray-400 mb-4"><strong>Ingredients:</strong> 200g chicken breast, 1 bell pepper, 1 cup broccoli, 2 tbsp soy sauce, 1 tbsp sesame oil, 1 garlic clove, 1 tsp ginger</p>
+                    <p class="text-gray-400 mb-4"><strong>Steps:</strong><br>1. Slice chicken and vegetables thinly.<br>2. Heat sesame oil in a pan, add garlic and ginger, sauté for 1 minute.<br>3. Add chicken, cook until browned, about 5 minutes.<br>4. Add vegetables and soy sauce, stir-fry for 3-4 minutes until tender.</p>
+                    <p class="text-gray-400"><strong>Tips:</strong> Serve with rice or noodles for a complete meal!</p>
+                </div>
+                <div class="recipe-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-xl font-semibold mb-4 text-white">Veggie Pasta</h3>
+                    <img src="Recipe2.jpg" alt="Veggie Pasta" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <p class="text-gray-400 mb-4"><strong>Ingredients:</strong> 200g pasta, 1 zucchini, 1 cup cherry tomatoes, 2 tbsp olive oil, 1 garlic clove, 1/4 cup parmesan, basil leaves</p>
+                    <p class="text-gray-400 mb-4"><strong>Steps:</strong><br>1. Boil pasta until al dente; drain.<br>2. Sauté garlic and zucchini in olive oil for 3 minutes.<br>3. Add halved cherry tomatoes and cook for 2 minutes.<br>4. Toss with pasta, sprinkle with parmesan and basil.</p>
+                    <p class="text-gray-400"><strong>Tips:</strong> Use whole wheat pasta for extra fiber!</p>
+                </div>
+                <div class="recipe-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-xl font-semibold mb-4 text-white">Chocolate Banana Smoothie</h3>
+                    <img src="Recipe3.jpg" alt="Chocolate Banana Smoothie" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <p class="text-gray-400 mb-4"><strong>Ingredients:</strong> 2 bananas, 1 cup milk, 1 tbsp cocoa powder, 1 tbsp honey, 1/2 tsp vanilla extract</p>
+                    <p class="text-gray-400 mb-4"><strong>Steps:</strong><br>1. Peel and slice bananas.<br>2. Blend bananas, milk, cocoa powder, honey, and vanilla until smooth.<br>3. Pour into a glass and serve chilled.</p>
+                    <p class="text-gray-400"><strong>Tips:</strong> Add a scoop of protein powder for a post-workout boost!</p>
+                </div>
+                <div class="recipe-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-xl font-semibold mb-4 text-white">Grilled Cheese Sandwich</h3>
+                    <img src="Recipe4.jpg" alt="Grilled Cheese Sandwich" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <p class="text-gray-400 mb-4"><strong>Ingredients:</strong> 2 slices bread, 2 slices cheddar cheese, 1 tbsp butter, 1 tomato (optional)</p>
+                    <p class="text-gray-400 mb-4"><strong>Steps:</strong><br>1. Butter one side of each bread slice.<br>2. Place cheese (and optional tomato slices) between unbuttered sides of bread.<br>3. Heat a skillet over medium heat; grill sandwich for 2-3 minutes per side until golden and cheese is melted.<br>4. Serve hot.</p>
+                    <p class="text-gray-400"><strong>Tips:</strong> Add a pinch of garlic powder to the butter for extra flavor!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo / Ingredient Input Section -->
+    <section class="demo-section py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-12">Try It Now</h2>
+            <div class="max-w-lg mx-auto">
+                <p class="text-gray-400 text-center mb-4">Got leftover ingredients? Let’s make something delicious!</p>
+                <div class="input-container mb-6">
+                    <input type="text" id="demo-ingredients" class="ingredient-input" placeholder="e.g., chicken, pasta, tomatoes">
+                </div>
+                <div class="text-center">
+                    <button class="surprise-button bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition duration-300" onclick="generateRecipe('demo')">Surprise Me!</button>
+                </div>
+                <div id="demo-recipe-output" class="recipe-output mt-8 bg-gray-800 p-6 rounded-lg shadow-lg hidden"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials / Social Proof Section -->
+    <section class="testimonials-section py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-12">What Our Users Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="testimonial-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="stars mb-4 flex justify-center">
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                    </div>
+                    <p class="text-gray-400 italic mb-4">“I’ve cooked 4 meals in a row without Googling anything! This app is a game-changer.”</p>
+                    <p class="text-white font-semibold">— Aditi M.</p>
+                </div>
+                <div class="testimonial-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="stars mb-4 flex justify-center">
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                    </div>
+                    <p class="text-gray-400 italic mb-4">“The recipes are so creative and easy to follow. My family loves it!”</p>
+                    <p class="text-white font-semibold">— James T.</p>
+                </div>
+                <div class="testimonial-card bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="stars mb-4 flex justify-center">
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                        <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.375 2.454a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.539 1.118l-3.375-2.454a1 1 0 00-1.175 0l-3.375 2.454c-.784.57-1.838-.197-1.539-1.118l1.286-3.97a1 1 0 00-.364-1.118L2.735 8.397c-.783-.57-.381-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.97z"></path></svg>
+                    </div>
+                    <p class="text-gray-400 italic mb-4">“Perfect for quick dinners. The pantry check feature is so handy!”</p>
+                    <p class="text-white font-semibold">— Maria S.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter / Subscription Section -->
+    <section class="newsletter-section py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-6">Stay Inspired with Fresh Recipes</h2>
+            <p class="text-gray-400 text-center mb-8">Want fresh recipe ideas in your inbox? Subscribe now!</p>
+            <div class="max-w-lg mx-auto">
+                <div class="input-container mb-6 flex">
+                    <input type="email" id="email" class="email-input flex-grow" placeholder="Enter your email">
+                    <button class="subscribe-button bg-green-600 text-white px-6 py-3 rounded-r-lg font-semibold hover:bg-green-700 transition duration-300">Subscribe</button>
+                </div>
+                <ul class="text-gray-400 text-left space-y-2">
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Weekly trending recipes
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Seasonal ingredient tips
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Diet-specific suggestions
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us / Mission Section -->
+    <section class="about-us-section py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-6">About Us</h2>
+            <div class="max-w-3xl mx-auto text-center">
+                <p class="text-gray-400 mb-6">At Recipe Generator, we’re passionate about making cooking accessible, sustainable, and inspired by global cuisines. Our AI-powered platform transforms your pantry ingredients into delicious, healthy meals, reducing waste and sparking creativity in the kitchen.</p>
+                <p class="text-gray-400 mb-8">Our mission is to empower everyone to cook with confidence, explore diverse flavors, and make every meal a joyful experience.</p>
+                <div class="image-container">
+                    <img src="Logo2.jpg" alt="Team Cooking" class="w-full h-64 object-cover rounded-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Banner Section -->
+    <section class="cta-banner-section sticky top-0 z-50 py-4 bg-gray-900 shadow-lg">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+            <p class="cta-text text-white text-lg font-semibold mb-4 md:mb-0">Ready to cook smarter?</p>
+            <div class="flex space-x-4">
+                <button class="cta-button bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition duration-300">Try the Recipe Generator</button>
+                <a href="#sample-recipes" class="secondary-cta text-green-400 hover:text-green-300 font-semibold transition duration-300">Explore Sample Recipes</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer-section bg-gray-900 py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center md:text-left">
+                    <h3 class="text-lg font-semibold text-white mb-4">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="footer-link text-gray-400 hover:text-green-400 transition duration-300">Home</a></li>
+                        <li><a href="#about" class="footer-link text-gray-400 hover:text-green-400 transition duration-300">About</a></li>
+                        <li><a href="#blog" class="footer-link text-gray-400 hover:text-green-400 transition duration-300">Blog</a></li>
+                        <li><a href="#faq" class="footer-link text-gray-400 hover:text-green-400 transition duration-300">FAQ</a></li>
+                        <li><a href="#contact" class="footer-link text-gray-400 hover:text-green-400 transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-lg font-semibold text-white mb-4">Stay Updated</h3>
+                    <div class="input-container mb-4 flex justify-center">
+                        <input type="email" id="footer-email" class="email-input" placeholder="Enter your email">
+                        <button class="subscribe-button bg-green-600 text-white px-4 py-2 rounded-r-lg font-semibold hover:bg-green-700 transition duration-300">Sign Up</button>
+                    </div>
+                    <p class="text-gray-400 text-sm">Get weekly recipe ideas and tips!</p>
+                </div>
+                <div class="text-center md:text-right">
+                    <h3 class="text-lg font-semibold text-white mb-4">Connect With Us</h3>
+                    <div class="flex justify-center md:justify-end space-x-4">
+                        <a href="#" class="social-icon text-gray-400 hover:text-green-400 transition duration-300">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"></path></svg>
+                        </a>
+                        <a href="#" class="social-icon text-gray-400 hover:text-green-400 transition duration-300">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H7v-3h3V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.91 8-4.94 8-9.95z"></path></svg>
+                        </a>
+                        <a href="#" class="social-icon text-gray-400 hover:text-green-400 transition duration-300">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.36 14.83c-.43-.07-.86-.17-1.28-.31-.36.76-.97 1.35-1.88 1.35-1.27 0-2.3-1.03-2.3-2.3s1.03-2.3 2.3-2.3c.53 0 1.01.18 1.4.49.43-.15.87-.25 1.31-.33-.46-.35-.76-.92-.76-1.56 0-1.04.84-1.88 1.88-1.88s1.88.84 1.88 1.88c0 .64-.31 1.21-.76 1.56.42.08.85.18 1.28.31-.39-.31-.87-.49-1.4-.49-1.27 0-2.3 1.03-2.3 2.3s1.03 2.3 2.3 2.3c.91 0 1.52-.59 1.88-1.35-.42.14-.85.24-1.28.31z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-gray-400 text-sm">
+                <p>© 2025 Recipe Generator. All rights reserved.</p>
+                <div class="mt-2">
+                    <a href="#privacy" class="footer-link text-gray-400 hover:text-green-400 transition duration-300 mx-2">Privacy Policy</a>
+                    <span>|</span>
+                    <a href="#terms" class="footer-link text-gray-400 hover:text-green-400 transition duration-300 mx-2">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const recipes = [
+            {
+                name: "Chicken Stir-Fry",
+                image: "Recipe1.jpg",
+                ingredients: ["chicken breast", "bell pepper", "broccoli", "soy sauce", "sesame oil", "garlic", "ginger"],
+                steps: [
+                    "Slice chicken and vegetables thinly.",
+                    "Heat sesame oil in a pan, add garlic and ginger, sauté for 1 minute.",
+                    "Add chicken, cook until browned, about 5 minutes.",
+                    "Add vegetables and soy sauce, stir-fry for 3-4 minutes until tender."
+                ],
+                tips: "Serve with rice or noodles for a complete meal!"
+            },
+            {
+                name: "Veggie Pasta",
+                image: "Recipe2.jpg",
+                ingredients: ["pasta", "zucchini", "cherry tomatoes", "olive oil", "garlic", "parmesan", "basil"],
+                steps: [
+                    "Boil pasta until al dente; drain.",
+                    "Sauté garlic and zucchini in olive oil for 3 minutes.",
+                    "Add halved cherry tomatoes and cook for 2 minutes.",
+                    "Toss with pasta, sprinkle with parmesan and basil."
+                ],
+                tips: "Use whole wheat pasta for extra fiber!"
+            },
+            {
+                name: "Chocolate Banana Smoothie",
+                image: "Recipe3.jpg",
+                ingredients: ["bananas", "milk", "cocoa powder", "honey", "vanilla extract"],
+                steps: [
+                    "Peel and slice bananas.",
+                    "Blend bananas, milk, cocoa powder, honey, and vanilla until smooth.",
+                    "Pour into a glass and serve chilled."
+                ],
+                tips: "Add a scoop of protein powder for a post-workout boost!"
+            },
+            {
+                name: "Grilled Cheese Sandwich",
+                image: "Recipe4.jpg",
+                ingredients: ["bread", "cheddar cheese", "butter", "tomato"],
+                steps: [
+                    "Butter one side of each bread slice.",
+                    "Place cheese (and optional tomato slices) between unbuttered sides of bread.",
+                    "Heat a skillet over medium heat; grill sandwich for 2-3 minutes per side until golden and cheese is melted.",
+                    "Serve hot."
+                ],
+                tips: "Add a pinch of garlic powder to the butter for extra flavor!"
+            }
+        ];
+
+        function generateRecipe(section) {
+            const inputId = section === 'hero' ? 'hero-ingredients' : 'demo-ingredients';
+            const outputId = section === 'hero' ? 'hero-recipe-output' : 'demo-recipe-output';
+            const input = document.getElementById(inputId).value.trim().toLowerCase();
+            const outputDiv = document.getElementById(outputId);
+            outputDiv.innerHTML = '';
+            outputDiv.classList.add('hidden');
+
+            if (!input) {
+                alert('Please enter at least one ingredient.');
+                return;
+            }
+
+            const inputIngredients = input.split(',').map(ing => ing.trim().toLowerCase());
+            const matchingRecipes = recipes.filter(recipe =>
+                recipe.ingredients.some(ing => inputIngredients.includes(ing.toLowerCase()))
+            );
+
+            if (matchingRecipes.length === 0) {
+                outputDiv.innerHTML = '<p class="text-gray-400 text-center">No recipes found with those ingredients. Try something else!</p>';
+                outputDiv.classList.remove('hidden');
+                return;
+            }
+
+            matchingRecipes.forEach(recipe => {
+                const recipeDiv = document.createElement('div');
+                recipeDiv.className = 'recipe-card bg-gray-800 p-6 rounded-lg shadow-lg mb-4';
+                recipeDiv.innerHTML = `
+                    <h3 class="text-xl font-semibold mb-4 text-white">${recipe.name}</h3>
+                    <img src="${recipe.image}" alt="${recipe.name}" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <p class="text-gray-400 mb-4"><strong>Ingredients:</strong> ${recipe.ingredients.join(', ')}</p>
+                    <p class="text-gray-400 mb-4"><strong>Steps:</strong><br>${recipe.steps.join('<br>')}</p>
+                    <p class="text-gray-400"><strong>Tips:</strong> ${recipe.tips}</p>
+                `;
+                outputDiv.appendChild(recipeDiv);
+            });
+            outputDiv.classList.remove('hidden');
+        }
+
+        function learnMore() {
+            alert('Learn more about our process!');
+        }
+
+        document.querySelector('.subscribe-button').addEventListener('click', function() {
+            const email = document.getElementById('email').value || document.getElementById('footer-email').value;
+            if (email) {
+                alert('Thank you for subscribing!');
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        });
+    </script>
+</body>
+</html>
